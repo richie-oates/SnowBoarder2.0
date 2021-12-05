@@ -6,14 +6,22 @@ using UnityEngine.SceneManagement;
 
 public class FinishLine : MonoBehaviour
 {
-    ParticleSystem finishEffect;
+    [SerializeField] ParticleSystem finishEffect;
+    [SerializeField] float sceneReloadDelay = 2f;
+    AudioSource audioSource;
+
+    private void Awake()
+    {
+        audioSource = GetComponent<AudioSource>();
+    }
 
     private void OnTriggerEnter2D(Collider2D other)
     {
         if (other.gameObject.CompareTag("Player"))
         {
             finishEffect.Play();
-            Invoke("RestartLevel", 3f);
+            audioSource.Play();
+            Invoke("RestartLevel", sceneReloadDelay);
         }
     }
 
